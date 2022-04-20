@@ -9,6 +9,7 @@ public class TestWork {
     public static void test1() {
         System.out.println("test 1");
     }
+
     @Test(priority = 4)
     public static void test2() {
         System.out.println("test 2");

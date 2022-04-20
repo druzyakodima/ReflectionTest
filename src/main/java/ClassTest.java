@@ -23,6 +23,7 @@ public class ClassTest {
 
         for (int i = 0; i <= methodArrayList.size() - 1; i++) {
             System.out.print("Приоритет: " + methodArrayList.get(i).getAnnotation(Test.class).priority() + " Тест: ");
+
             methodArrayList.get(i).invoke(cl);
         }
 
