@@ -13,7 +13,7 @@ public class ClassTest {
 
         for (Method method : methods) {
             if (method.isAnnotationPresent(BeforeSuite.class)) {
-                    method.invoke(clazz.getDeclaredConstructor().newInstance());
+                method.invoke(clazz.getDeclaredConstructor().newInstance());
 
             }
             if (method.isAnnotationPresent(Test.class)) {
