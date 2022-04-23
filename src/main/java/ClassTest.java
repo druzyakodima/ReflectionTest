@@ -5,14 +5,16 @@ import java.util.Comparator;
 
 public class ClassTest {
 
-    public static void start(Class cl) throws InvocationTargetException, IllegalAccessException {
+    public void start(Class<?> clazz) throws InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
 
-        Method[] methods = cl.getDeclaredMethods();
+        Method[] methods = clazz.getDeclaredMethods();
+
         ArrayList<Method> methodArrayList = new ArrayList<>();
 
         for (Method method : methods) {
             if (method.isAnnotationPresent(BeforeSuite.class)) {
-                method.invoke(cl);
+                method.invoke(clazz.getDeclaredConstructor().newInstance());
+
             }
             if (method.isAnnotationPresent(Test.class)) {
                 methodArrayList.add(method);
@@ -23,13 +25,16 @@ public class ClassTest {
 
         for (int i = 0; i <= methodArrayList.size() - 1; i++) {
             System.out.print("Приоритет: " + methodArrayList.get(i).getAnnotation(Test.class).priority() + " Тест: ");
-            methodArrayList.get(i).invoke(cl);
+
+            methodArrayList.get(i).invoke(clazz.getDeclaredConstructor().newInstance());
         }
 
         for (Method method : methods) {
-            if (method.isAnnotationPresent(AfterSuite.class)) {
-                method.invoke(cl);
+            if (!method.isAnnotationPresent(AfterSuite.class)) {
+                continue;
             }
+
+            method.invoke(clazz.getDeclaredConstructor().newInstance());
         }
     }
 }
